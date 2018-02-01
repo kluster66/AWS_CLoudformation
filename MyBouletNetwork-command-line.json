@@ -1,0 +1,143 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+       
+    },
+    "Resources": {
+        "VPCParis": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true",
+                "CidrBlock": "10.0.0.0/16",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "CestLeWeekend"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "33dbc373-c674-4a72-b7ab-1342c53d11a4"
+                }
+            }
+        },
+        "PublicSubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCParis"
+                },
+                "CidrBlock": "10.0.0.0/24",
+                "AvailabilityZone": {
+                    "Ref": "PublicAvailabilityZone"
+                },
+                "MapPublicIpOnLaunch": true
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "15eacefe-b36c-4520-9973-0ca79a5d6336"
+                }
+            }
+        },
+        "PrivateSubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCParis"
+                },
+                "CidrBlock": "10.0.1.0/24",
+                "AvailabilityZone": {
+                    "Ref": "PrivateAvailabilityZone"
+                },
+                "MapPublicIpOnLaunch": false
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a141ef25-0c7b-4f2d-ab06-e85fc80d9a3d"
+                }
+            }
+        },
+        "InternetGateway": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "525906aa-b81c-4f64-bf19-e94bfa5fae4f"
+                }
+            }
+        },
+        "EC2VPCG2WNKR": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "VPCParis"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "e7759e33-e08e-465b-b61a-b3118e2c9401"
+                }
+            }
+        },
+        "PublicRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCParis"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "c47520a8-e5a1-469f-a672-f23427eafc94"
+                }
+            }
+        },
+        "PublicRoute": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "PublicRouteTable"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a87a2b6e-c655-4457-b849-e3da7a201ac8"
+                }
+            },
+            "DependsOn": [
+                "InternetGateway"
+            ]
+        }
+    },
+    "Parameters": {
+        "PublicAvailabilityZone": {
+            "Description": "Network AZ",
+            "Type": "String",
+            "Default": "eu-west-3a",
+            "AllowedValues": [
+                "eu-west-3a",
+                "eu-west-3b",
+                "eu-west-3c"
+            ]
+        },
+        "PrivateAvailabilityZone": {
+            "Description": "Network AZ",
+            "Type": "String",
+            "Default": "eu-west-3b",
+            "AllowedValues": [
+                "eu-west-3a",
+                "eu-west-3b",
+                "eu-west-3c"
+            ]
+        }
+    }
+}
