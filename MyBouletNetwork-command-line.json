@@ -117,27 +117,5 @@
                 "InternetGateway"
             ]
         }
-    },
-    "Parameters": {
-        "PublicAvailabilityZone": {
-            "Description": "Network AZ",
-            "Type": "String",
-            "Default": "eu-west-3a",
-            "AllowedValues": [
-                "eu-west-3a",
-                "eu-west-3b",
-                "eu-west-3c"
-            ]
-        },
-        "PrivateAvailabilityZone": {
-            "Description": "Network AZ",
-            "Type": "String",
-            "Default": "eu-west-3b",
-            "AllowedValues": [
-                "eu-west-3a",
-                "eu-west-3b",
-                "eu-west-3c"
-            ]
-        }
     }
 }
