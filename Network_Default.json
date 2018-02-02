@@ -33,14 +33,14 @@
           "Tags": [
             {
               "Key": "Name",
-              "value": "PublicSubnet"
+              "Value": "PublicSubnet"
             }
           ],
           "VpcId": {
             "Ref": "VPCParis"
           }
         }
-      },
+      }
     },
     "Parameters": {
         "PublicAvailabilityZone":{
