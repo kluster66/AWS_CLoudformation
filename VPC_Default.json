@@ -12,10 +12,6 @@
             {
                 "key": "Name",
                 "Value": "VPCFrance"
-            },
-            {
-                "key": "Region",
-                "Value": "Eu-West-3"
             }
           ]
         }
