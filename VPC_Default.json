@@ -1,0 +1,24 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template to launch an Amazon VPC.",
+    "Resources": {
+      "VPCParis": {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+          "EnableDnsSupport": "true",
+          "EnableDnsHostnames": "true",
+          "CidrBlock" : "10.0.0.0/16",
+          "Tags": [
+            {
+                "key": "Name",
+                "Value": "VPCFrance"
+            },
+            {
+                "key": "Region",
+                "Value": "Eu-West-3"
+            }
+          ]
+        }
+      }
+    }
+}
