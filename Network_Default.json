@@ -24,7 +24,6 @@
       "PublicSubnet":{
         "Type": "AWS::EC2::Subnet",
         "Properties": {
-          "AssignIpv6AddressOnCreation": "false",
           "AvailabilityZone": {
             "Ref": "PublicAvailabilityZone"
           },
