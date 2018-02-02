@@ -24,7 +24,6 @@
       "PublicSubnet":{
         "Type": "AWS::EC2::Subnet",
         "Properties": {
-          "AssignIpv6AddressOnCreation": "false",
           "AvailabilityZone": {
             "Ref": "PublicAvailabilityZone"
           },
@@ -33,14 +32,14 @@
           "Tags": [
             {
               "Key": "Name",
-              "value": "PublicSubnet"
+              "Value": "PublicSubnet"
             }
           ],
           "VpcId": {
             "Ref": "VPCParis"
           }
         }
-      },
+      }
     },
     "Parameters": {
         "PublicAvailabilityZone":{
