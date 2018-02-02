@@ -33,7 +33,7 @@
           "Tags": [
             {
               "Key": "Name",
-              "value": "PublicSubnet"
+              "Value": "PublicSubnet"
             }
           ],
           "VpcId": {
