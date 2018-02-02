@@ -25,7 +25,9 @@
         "Type": "AWS::EC2::Subnet",
         "Properties": {
           "AssignIpv6AddressOnCreation": "false",
-          "AvailabilityZone": String,
+          "AvailabilityZone": {
+            "Ref": "PublicAvailabilityZone"
+          },
           "CidrBlock": "10.0.1.0/24",
           "MapPublicIpOnLaunch" : "true",
           "Tags": [
@@ -37,16 +39,19 @@
           "VpcId": {
             "Ref": "VPCParis"
           }
-
         }
       },
-      "PrivateSubnet":{
-        "Type": "AWS::EC2::Subnet",
-        "Properties": {
-
+    },
+    "Parameters": {
+        "PublicAvailabilityZone":{
+            "Description": "Network AZ",
+            "Type": "String",
+            "Default": "eu-west-3a",
+            "AllowedValues": [
+                "eu-west-3a",
+                "eu-west-3b",
+                "eu-west-3c"
+            ]
         }
       }
-    },
-    "Output":
-    {}
   }
