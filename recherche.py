@@ -77,13 +77,15 @@ def main():
 	print(json.dumps(Entreprise, indent = 3,ensure_ascii=False))
 # socket.send(Entreprise)
 if __name__ == "__main__":
-	if len(sys.argv) > 2:
+	if len(sys.argv) > 3:
 		recherche = sys.argv[1]
 		region = sys.argv[2]
+		pays = sys.argv[3]
 	else:
-		if len(sys.argv) > 1:
+		if len(sys.argv) > 2:
 			recherche = sys.argv[1]
-			region = ''
+			region = sys.argv[2]
+			pays = 'fr'
 		else:
 			print("Erreur de paramètres")
 	main()
