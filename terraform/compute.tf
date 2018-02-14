@@ -6,6 +6,12 @@ resource "aws_instance" "server01"{
   security_groups = "${var.aws_security_group}"
 
 #mise a jour de la vm et installation des packages
+connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key = "${var.key_path}"
+}
+
 provisioner "remote-exec" {
   inline = [
     "sudo yum update"
