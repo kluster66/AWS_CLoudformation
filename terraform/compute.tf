@@ -5,6 +5,7 @@ resource "aws_instance" "server01"{
   key_name = "${var.aws_key_name}"
   security_groups = "${var.aws_security_group}"
 
+  subnet_id = "${aws_subnet.public_subnet.id}"
   tags {
     Name = "Terraform_example"
   }
