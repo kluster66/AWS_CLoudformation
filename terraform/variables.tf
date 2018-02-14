@@ -10,8 +10,8 @@ variable "aws_ami" {
 
 variable "aws_key_name" {
   default ="zorglub"
-
 }
+
 variable "aws_security_group" {
   default = ["MyPublicSG"]
 }
