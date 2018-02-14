@@ -15,3 +15,5 @@ variable "aws_key_name" {
 variable "aws_security_group" {
   default = ["tf-demo-sg"]
 }
+
+key_path = /"home/philippe/dev/aws/ssh_keys/zorglub/zorglub.pem"
