@@ -41,3 +41,12 @@ resource "aws_subnet" "public_subnet" {
     Name = "MyPublicSubnet"
   }
 }
+
+
+resource "aws_internet_gateway" "gw" {
+  vpc_id = "${aws_vpc.main.id}"
+
+  tags {
+    Name = "MyInternetGW"
+  }
+}
