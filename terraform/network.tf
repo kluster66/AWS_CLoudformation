@@ -1,6 +1,7 @@
 # Security group
 resource "aws_security_group" "default" {
     name = "tf-demo-sg"
+    vpc_id      = "${aws_vpc.main.id}"
     description = "Allow ssh and web access"
     # SSH access from anywhere
     ingress {
