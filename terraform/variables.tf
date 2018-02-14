@@ -9,5 +9,5 @@ variable "aws_ami" {
 }
 
 variable "aws_key_name" {
-  default ="ParisKP"
+  default ="zorglub"
 }
