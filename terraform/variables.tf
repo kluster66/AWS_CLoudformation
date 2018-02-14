@@ -13,5 +13,5 @@ variable "aws_key_name" {
 }
 
 variable "aws_security_group" {
-  default = ["MyPublicSG"]
+  default = ["tf-demo-sg"]
 }
