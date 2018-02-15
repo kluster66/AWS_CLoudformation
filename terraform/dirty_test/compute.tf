@@ -16,5 +16,6 @@ resource "aws_instance" "server01"{
               touch /home/ec2-user/toto
               sudo yum update -y
               sudo yum install httpd -y
+              sudo service httpd start
               EOF
 }
