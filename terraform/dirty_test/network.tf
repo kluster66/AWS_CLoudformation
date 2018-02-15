@@ -62,3 +62,7 @@ resource "aws_route_table" "public" {
         gateway_id = "${aws_internet_gateway.gw.id}"
     }
 }
+resource "aws_main_route_table_association" "a" {
+  vpc_id         = "${aws_vpc.main.id}"
+  route_table_id = "${aws_route_table.public.id}"
+}
