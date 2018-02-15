@@ -14,7 +14,7 @@ resource "aws_instance" "server01"{
   user_data = <<-EOF
               #!bin/bash
               touch /home/ec2-user/toto
-              sudo yum update
-              sudo yum install http
+              sudo yum update -y
+              sudo yum install httpd -y
               EOF
 }
