@@ -9,7 +9,7 @@ resource "aws_instance" "server01"{
   tags {
     Name = "Terraform_example"
   }
-  security_groups = "${aws_security_group.default.id}"
+  security_groups = ["${aws_security_group.default.id}"]
 #mise a jour de la vm et installation des packages
   user_data = <<-EOF
               #!bin/bash
