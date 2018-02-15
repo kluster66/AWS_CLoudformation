@@ -1,3 +1,18 @@
+data "aws_ami" "web" {
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+  most_recent = true
+}
+
+
+
+
 # EC2 server
 resource "aws_instance" "server01"{
   count=2
@@ -18,4 +33,8 @@ resource "aws_instance" "server01"{
               sudo yum install httpd -y
               sudo service httpd start
               EOF
+}
+
+output "ami_information" {
+  value = "${data.aws_ami.web.tags}"
 }
