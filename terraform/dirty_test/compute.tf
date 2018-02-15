@@ -13,6 +13,7 @@ resource "aws_instance" "server01"{
 #mise a jour de la vm et installation des packages
   user_data = <<-EOF
               #!bin/bash
+              touch /home/ec2-user/toto
               sudo yum update
               sudo yum install http
               EOF
