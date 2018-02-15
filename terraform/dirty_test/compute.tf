@@ -3,10 +3,6 @@ data "aws_ami" "web" {
     name   = "state"
     values = ["available"]
   }
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
   most_recent = true
 }
 
