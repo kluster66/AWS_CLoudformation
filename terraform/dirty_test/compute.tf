@@ -5,7 +5,7 @@ data "aws_ami" "web" {
   }
   filter {
     name = "owner-alias"
-    value = ["amazon"]
+    values = ["amazon"]
   }
   most_recent = true
 }
