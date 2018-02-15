@@ -3,6 +3,10 @@ data "aws_ami" "web" {
     name   = "state"
     values = ["available"]
   }
+  filter {
+    name = "owner-alias"
+    value = ["amazon"]
+  }
   most_recent = true
 }
 
@@ -32,5 +36,5 @@ resource "aws_instance" "server01"{
 }
 
 output "ami_information" {
-  value = "${data.aws_ami.web.tags}"
+  value = "${data.aws_ami.web.image_id}"
 }
