@@ -1,3 +1,3 @@
 resource "aws_iam_user" "students" {
-  name = "plop"
+  name = "user-${var.user_name_prefix}-01"
 }
