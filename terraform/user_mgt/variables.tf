@@ -7,7 +7,7 @@ variable "key_path" {
 
 }
 
-Variable "user_name_prefix" {
+variable "user_name_prefix" {
   default = "Soget"
 
 }
