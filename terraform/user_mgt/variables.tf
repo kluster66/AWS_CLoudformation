@@ -8,6 +8,6 @@ variable "key_path" {
 }
 
 variable "user_name_prefix" {
-  default = "Soget"
+  default = "soget"
 
 }
