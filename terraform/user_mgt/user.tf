@@ -6,7 +6,8 @@ resource "aws_iam_user" "students" {
 
 resource "aws_iam_user_policy" "st_policy" {
   user = "${aws_iam_user.students.name}"
-  policy = <<EOF {
+  policy = <<EOF
+  {
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -58,6 +59,6 @@ resource "aws_iam_user_policy" "st_policy" {
         }
     ]
   }
-  EOF
+EOF
 
 }
