@@ -3,9 +3,11 @@ resource "aws_iam_user" "students" {
   name = "${var.user_name_prefix}0${count.index}"
 
 }
+
 resource "aws_iam_user_policy" "st_policy" {
   user = "${aws_iam_user.students.name}"
-  policy = <<EOF {
+  policy = <<EOF
+  {
     "Version": "2012-10-17",
     "Statement": [
         {
