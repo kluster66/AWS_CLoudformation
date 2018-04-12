@@ -4,7 +4,7 @@ resource "aws_iam_user" "students" {
 }
 
 
-ressource "aws_iam_group" "students_group" {
+resource "aws_iam_group" "students_group" {
   name = "students"
 }
 
