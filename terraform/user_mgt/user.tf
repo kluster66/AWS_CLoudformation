@@ -10,7 +10,7 @@ ressource "aws_iam_group" "students_group" {
 
 resource "aws_iam_user_login_profile" "students" {
   user = "${aws_iam_user.students.name}"
-  pgp_key ) "keybase:philippe"
+  pgp_key = "keybase:philippe"
 }
 
 output "password" {
