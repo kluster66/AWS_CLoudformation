@@ -1,4 +1,4 @@
-ressource "aws_instance" "example" {
+resource "aws_instance" "example" {
   ami           = "ami-8ee056f3"
   instance_type = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
