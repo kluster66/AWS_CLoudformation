@@ -6,6 +6,8 @@ resource "aws_instance" "example" {
 
   user_data = <<-EOF
               #!/bin/bash
+              nohup yum update
+              nohup yum install busybox
               echo "hello world" > index.html
               nohup busybox httpd -f -p 8080 &
               EOF
@@ -26,6 +28,12 @@ resource "aws_security_group" "instance" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
