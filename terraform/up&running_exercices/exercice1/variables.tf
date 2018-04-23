@@ -10,3 +10,7 @@ variable "key_path" {
   default = "/home/philippe/dev/aws/ssh_keys/zorglub/zorglub.pem"
 
 }
+
+variable "server_port" {
+  description = "The port used by HTTP requests"
+}
