@@ -6,8 +6,8 @@ resource "aws_instance" "example" {
 
   user_data = <<-EOF
               #!/bin/bash
-              nohup yum update
-              nohup yum install busybox
+              nohup yum update -y
+              nohup yum install busybox -y
               echo "hello world" > index.html
               nohup busybox httpd -f -p 8080 &
               EOF
