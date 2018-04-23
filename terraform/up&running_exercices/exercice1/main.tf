@@ -1,10 +1,7 @@
 ressource "aws_instance" "example" {
   ami           = "ami-8ee056f3"
   instance_type = "t2.micro"
-<<<<<<< HEAD
   vpc_security_group_ids = ["${aws_security_group.instance.id}"]
-=======
->>>>>>> 30b6a68f571a1b3e688914f40639e634b6a1255a
 
   user_data = <<-EOF
               #!/bin/bash
