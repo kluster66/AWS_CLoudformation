@@ -13,4 +13,5 @@ variable "key_path" {
 
 variable "server_port" {
   description = "The port used by HTTP requests"
+  default = 8080
 }
