@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "terraform_state" {
 terraform {
   backend "s3" {
     bucket = "terraform-up-and-running-state-tls"
-    key    = "exercice1"
+    key    = "exercice1.tfstate"
     region = "eu-west-3"
   }
 }
