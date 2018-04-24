@@ -11,3 +11,11 @@ resource "aws_s3_bucket" "terraform_state" {
     prevent_destroy = true
   }
 }
+
+terraform {
+  backend "s3" {
+    bucket = "terraform-up-and-running-state-tls"
+    key    = "exercice1"
+    region = "${var.aws_region}"
+  }
+}
