@@ -16,6 +16,6 @@ terraform {
   backend "s3" {
     bucket = "terraform-up-and-running-state-tls"
     key    = "exercice1"
-    region = "${var.aws_region}"
+    region = "eu-west-3"
   }
 }
