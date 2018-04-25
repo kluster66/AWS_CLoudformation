@@ -1,4 +1,5 @@
 *** TEMPLATE 0 : CREATE DIRECTLY
+ceci est un aide mémoire des commandes AWS_CLoudformation
 
 aws cloudformation validate-template --template-body file://template0.json
 aws cloudformation create-stack --template-body file://template0.json --stack-name Template0
@@ -7,4 +8,3 @@ aws cloudformation describe-stacks --stack-name Template0
 aws cloudformation describe-stacks --stack-name Template0 --query "Stacks[].StackStatus"
 aws cloudformation describe-stack-events --stack-name Template0
 aws cloudformation get-template --stack-name Template0
-c'est un test
