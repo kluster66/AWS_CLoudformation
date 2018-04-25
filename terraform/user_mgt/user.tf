@@ -61,3 +61,12 @@ resource "aws_iam_policy" "policy" {
   }
   EOF
 }
+
+resource "aws_iam_group" "group" {
+  name = "students-group"
+}
+
+resource "aws_iam_group_policy_attachment" "students-attachment" {
+  group = "${aws_iam_group.group.name}"
+  policy_arn = "${aws_iam_policy.policy.arn}"
+}
