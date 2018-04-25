@@ -1,0 +1,93 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "CloudFormation script creates user along with policies: 1.It creates Power user 2.It creates Managed Policy and gets attached to PowerUser 3. It also creates Inline policy and gets attached to PowerUser.",
+
+  "Parameters" : {
+     "PowerUserName": {
+      "Type": "String",
+      "Description" : "Developer User Name"
+    },
+    "Password": {
+      "NoEcho": "true",
+      "Type": "String",
+      "Description" : "New account password",
+      "MinLength": "1",
+      "MaxLength": "41"
+      
+    }  
+	},
+
+  "Resources" : {
+    "PowerUser" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "LoginProfile": {
+          "Password": { "Ref" : "Password" }
+        },
+		"UserName": {"Ref" : "PowerUserName"}
+      }
+    },
+ 
+    "AddUserToPowerUserGroup" : {
+      "Type" : "AWS::IAM::UserToGroupAddition",
+      "Properties" : {
+        "GroupName": { "Fn::ImportValue" : "PowerUserGroup"},
+        "Users" : [ { "Ref" : "PowerUser" } ]
+      }
+    },
+
+    "PowerPolicies" : {
+      "Type" : "AWS::IAM::Policy",
+      "Properties" : {
+        "PolicyName" : "PowerPolicy",
+        "PolicyDocument" : {
+          "Statement": [
+        {
+            "Effect": "Allow",
+            "NotAction": [
+                "iam:*",
+                "organizations:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole",
+                "iam:ListRoles",
+                "organizations:DescribeOrganization"
+            ],
+            "Resource": "*"
+        }
+		]
+        },
+        "Users" : [{"Ref" : "PowerUser"}]
+      }
+    },
+	"CreateTestPolicy" : {
+	  "Type" : "AWS::IAM::ManagedPolicy",
+	  "Properties" : {
+		"Description" : "managed policy for  PowerUser",
+		"Path" : "/",
+		"Users" : [{"Ref" : "PowerUser"}],
+		"PolicyDocument" :   {
+		  "Version":"2012-10-17", 
+		  "Statement" : {
+			"Effect" : "Allow",           
+			"Action" : [
+              "cloudformation:DescribeStacks",
+              "cloudformation:DescribeStackEvents",
+              "cloudformation:DescribeStackResource",
+              "cloudformation:DescribeStackResources",
+              "cloudformation:GetTemplate",
+              "cloudformation:List*"
+              ],
+			"Resource" : "*"
+		  }
+		}
+	  }
+	}
+  }
+}

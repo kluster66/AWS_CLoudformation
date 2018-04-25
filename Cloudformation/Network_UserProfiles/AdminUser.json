@@ -1,0 +1,70 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" :  "CloudFormation script creates user along with policies: 1.It creates Admin user 2.It creates Managed Policy and gets attached to Admin user 3. It also creates Inline policy and gets attached to Admin user.",
+
+  "Parameters" : {
+   "AdminUserName": {
+      "Type": "String",
+      "Description" : "Administrator User Name"
+    },
+    "Password": {
+      "NoEcho": "true",
+      "Type": "String",
+      "Description" : "User password",
+      "MinLength": "1",
+      "MaxLength": "41"
+    }  
+	},
+
+  "Resources" : {
+    "AdminUser" : {
+      "Type" : "AWS::IAM::User",
+      "Properties" : {
+        "LoginProfile": {
+          "Password": { "Ref" : "Password" }
+        },
+		"UserName": {"Ref" : "AdminUserName"}
+      }
+    },
+
+    "AddUserToPowerUserGroup" : {
+      "Type" : "AWS::IAM::UserToGroupAddition",
+      "Properties" : {
+        "GroupName": { "Fn::ImportValue" : "AdministratorGroup"},
+        "Users" : [ { "Ref" : "AdminUser" } ]
+      }
+    },
+
+    "AdminPolicies" : {
+      "Type" : "AWS::IAM::Policy",
+      "Properties" : {
+        "PolicyName" : "AdminUserInlinePolicy",
+        "PolicyDocument" : {
+          "Statement": [{
+            "Effect"   : "Allow",
+            "Action"   : "*",
+            "Resource" : "*"
+          }]
+        },
+       "Users" : [{"Ref" : "AdminUser"}]
+      }
+    },
+	"CreateTestPolicy" : {
+	  "Type" : "AWS::IAM::ManagedPolicy",
+	  "Properties" : {
+		"Description" : "Managed policy for Admin User",
+		"Path" : "/",
+		"Users" : [{"Ref" : "AdminUser"}],
+		"PolicyDocument" :   {
+		  "Version":"2012-10-17", 
+		  "Statement" : {
+			"Effect" : "Allow",           
+			"Action" : "*",
+			"Resource" : "*"
+		  }
+		}
+	  }
+	}
+  }
+}

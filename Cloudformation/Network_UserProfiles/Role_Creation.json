@@ -1,0 +1,112 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "This template will create 2 IAM Roles namely ApplicationTierRole & PublicTierRole. We are using this roles specially to create EC2 instances,hence we are creating Instance profile and attaching this roles to that instance profile.",
+  "Parameters" : {
+     "PublicTierRoleName": {
+      "Type": "String",
+	  "Default": "PublicTierRole",
+      "Description" : "Developer Group Name"
+    },
+	"ApplicationTierRoleName": {
+      "Type": "String",
+	  "Default": "ApplicationTierRole",
+      "Description" : "Admin Group Name"
+    }   	
+	},
+  "Resources": {
+    "PublicTierRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com",
+				  "cloudformation.amazonaws.com"
+				 
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+			
+          ]
+        },
+        "RoleName": {"Ref" : "PublicTierRoleName"},
+        "Policies": [
+          {
+            "PolicyName": "PublicTierPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ApplicationTierRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com",
+				  "cloudformation.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "RoleName": {"Ref" : "ApplicationTierRoleName"},
+        "Policies": [
+          {
+            "PolicyName": "ApplicationTierPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "*",
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+		"PublicRoleInstanceProfile":{ 
+		"Type": "AWS::IAM::InstanceProfile", 
+		"Properties": 
+		{ "Path": "/", 
+		"Roles": [{"Ref":"PublicTierRole"}], 
+		"InstanceProfileName":"PublicRoleInstanceProfile"
+		} 
+		},
+		"ApplicationRoleInstanceProfile":{ 
+		"Type": "AWS::IAM::InstanceProfile", 
+		"Properties": 
+		{ "Path": "/", 
+		"Roles": [{"Ref":"PublicTierRole"}], 
+		"InstanceProfileName":"ApplicationRoleInstanceProfile"
+		} 
+		} 		
+  }
+}
