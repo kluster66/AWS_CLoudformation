@@ -73,7 +73,7 @@ resource "aws_iam_group_policy_attachment" "students-attachment" {
 
 resource "aws_iam_group_membership" "team" {
   name = "students-group-membership"
-  users = ["${aws_iam_user.students.name}"]
+  users = ["${aws_iam_user.students.*.name}"]
 
   group = "${aws_iam_group.group.name}"
 }
