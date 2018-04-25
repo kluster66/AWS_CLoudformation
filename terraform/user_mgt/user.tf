@@ -1,6 +1,7 @@
 resource "aws_iam_user" "students" {
   count = 3
   name = "${var.user_name_prefix}0${count.index}"
+  force_destroy = yes
 }
 
 resource "aws_iam_policy" "policy" {
