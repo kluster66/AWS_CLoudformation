@@ -79,6 +79,7 @@ resource "aws_iam_group_membership" "team" {
 }
 
 resource "aws_iam_user_login_profile" "students" {
-  user = "${aws_iam_user.students.*.name}"
+  count = "${length(aws_iam_user.students.*.name)}"
+  user = "${element(aws_iam_user.students.*.name, count.index)}"
   pgp_key = "keybase:philippe"
 }
