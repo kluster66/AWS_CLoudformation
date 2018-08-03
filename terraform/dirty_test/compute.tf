@@ -10,9 +10,6 @@ data "aws_ami" "web" {
   most_recent = true
 }
 
-
-
-
 # EC2 server
 resource "aws_instance" "server01"{
   count=2
