@@ -10,7 +10,7 @@ data "aws_ami" "web" {
   most_recent = true
 }
 
-# EC2 server
+# EC2 server test 01
 resource "aws_instance" "server01"{
   count=2
   instance_type ="t2.micro"
