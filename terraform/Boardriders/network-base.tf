@@ -6,7 +6,7 @@
 # 1 security group ssh+http+sapgui
 #
 # Commentaires:
-# 
+#
 ###################################################
 
 #On cree les Security group
@@ -15,6 +15,13 @@ resource "aws_security_group" "default" {
     vpc_id      = "${aws_brds_vpc.main.id}"
     description = "Allow ssh and web access"
 
+    # RDP access (on est sous windows quand même)
+    ingress {
+      from port = 3389
+      to port = 3389
+      protocol ="rdp"
+      cidr_block = ["0.0.0.0/0"]
+    }
     # SSH access from anywhere
     ingress {
       from_port = 22
