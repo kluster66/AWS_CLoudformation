@@ -4,12 +4,12 @@ resource "aws_security_group" "default" {
     vpc_id      = "${aws_vpc.main.id}"
     description = "Allow ssh and web access"
 
-    # SSH access from anywhere
+    # SSH access from temporary IP
     ingress {
       from_port = 22
       to_port = 22
       protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = ["1.2.3.4/32"]
     }
     # HTTP access from anywhere
     ingress {
