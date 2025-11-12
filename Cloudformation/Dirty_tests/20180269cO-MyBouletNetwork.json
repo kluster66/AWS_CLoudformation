@@ -206,7 +206,9 @@
             "Properties": {
                 "EnableDnsSupport": "true",
                 "EnableDnsHostnames": "true",
-                "CidrBlock": "10.0.0.0/16",
+                "CidrBlock": {
+                    "Ref": "VpcCidr"
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -226,7 +228,9 @@
                 "VpcId": {
                     "Ref": "VPCParis"
                 },
-                "CidrBlock": "10.0.0.0/24",
+                "CidrBlock": {
+                    "Ref": "PublicSubnetCidr"
+                },
                 "AvailabilityZone": {
                     "Ref": "PublicAvailabilityZone"
                 },
@@ -244,7 +248,9 @@
                 "VpcId": {
                     "Ref": "VPCParis"
                 },
-                "CidrBlock": "10.0.1.0/24",
+                "CidrBlock": {
+                    "Ref": "PrivateSubnetCidr"
+                },
                 "AvailabilityZone": {
                     "Ref": "PrivateAvailabilityZone"
                 },
@@ -313,9 +319,106 @@
             "DependsOn": [
                 "InternetGateway"
             ]
+        },
+        "WebServerSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow HTTP/HTTPS and SSH inbound traffic",
+                "VpcId": {
+                    "Ref": "VPCParis"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "WebServerSecurityGroup"
+                    }
+                ]
+            }
+        },
+        "S3VPCEndpoint": {
+            "Type": "AWS::EC2::VPCEndpoint",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": "*",
+                            "Action": "s3:*",
+                            "Resource": "arn:aws:s3:::*"
+                        }
+                    ]
+                },
+                "RouteTableIds": [
+                    {
+                        "Ref": "PublicRouteTable"
+                    }
+                ],
+                "ServiceName": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "com.amazonaws.",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ".s3"
+                        ]
+                    ]
+                },
+                "VpcId": {
+                    "Ref": "VPCParis"
+                }
+            }
+        },
+        "PublicSubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "PublicSubnet"
+                },
+                "RouteTableId": {
+                    "Ref": "PublicRouteTable"
+                }
+            }
         }
     },
     "Parameters": {
+        "VpcCidr": {
+            "Description": "CIDR block for the VPC",
+            "Type": "String",
+            "Default": "10.0.0.0/16"
+        },
+        "PublicSubnetCidr": {
+            "Description": "CIDR block for the public subnet",
+            "Type": "String",
+            "Default": "10.0.0.0/24"
+        },
+        "PrivateSubnetCidr": {
+            "Description": "CIDR block for the private subnet",
+            "Type": "String",
+            "Default": "10.0.1.0/24"
+        },
         "PublicAvailabilityZone": {
             "Description": "Network AZ",
             "Type": "String",
